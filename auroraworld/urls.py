@@ -7,8 +7,11 @@ from . import category
 from . import link
 from . import share
 from . import user
+from . import views
 
 urlpatterns = [
+    path('', views.index),
+
     path('auth/refresh', auth.refresh),
     path('auth/sign-in', auth.sign_in),
     path('auth/sign-out', auth.sign_out),
