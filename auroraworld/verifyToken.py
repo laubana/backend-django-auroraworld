@@ -5,8 +5,8 @@ from django.conf import settings
 from rest_framework.response import Response
 
 
-def verify_token(view_func):
-    @wraps(view_func)
+def verify_token(func):
+    @wraps(func)
     def wrapper(request, *args, **kwargs):
         try:
             auth_header = request.META.get('HTTP_AUTHORIZATION')
@@ -37,6 +37,6 @@ def verify_token(view_func):
             print(error)
 
             return Response({'message': 'Server Error'}, status=500)
-        return view_func(request, *args, **kwargs)
+        return func(request, *args, **kwargs)
 
     return wrapper
