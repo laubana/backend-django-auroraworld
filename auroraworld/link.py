@@ -135,7 +135,7 @@ def get_links(request):
 def remove_update_link(request, link_id):
     try:
         if request.method == 'DELETE':
-            if not link_id:
+            if not link_id.strip():
                 return Response({'message': 'Invalid Input'}, status=400)
 
             session_user_id = getattr(request, 'user_id', None)
@@ -160,7 +160,7 @@ def remove_update_link(request, link_id):
             name = request.data.get('name').strip()
             url = request.data.get('url').strip()
 
-            if not link_id or not category_id or not name or not url:
+            if not link_id.strip() or not category_id or not name or not url:
                 return Response({'message': 'Invalid Input'}, status=400)
 
             session_user_id = getattr(request, 'user_id', None)

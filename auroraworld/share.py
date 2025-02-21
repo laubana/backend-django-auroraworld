@@ -55,14 +55,16 @@ def add_share(request):
             except IntegrityError as error:
                 error_str = str(error).lower()
 
-                if 'shares.id' in error_str:
+                if 'unique' in error_str and 'link_id' in error_str and 'user_id' in error_str:
+                    return Response({'message': 'Share already exists.'}, status=409)
+                elif 'shares.id' in error_str:
                     attempts += 1
 
                     continue
                 else:
                     raise error
 
-        if new_share is not None:
+        if new_share:
             return Response({
                 'message': 'Share created successfully.',
                 'data': {
@@ -171,7 +173,7 @@ def add_shares(request):
 @api_view(['GET'])
 def get_shares(request, link_id):
     try:
-        if not link_id:
+        if not link_id.strip():
             return Response({'message': 'Invalid Input'}, status=400)
 
         session_user_id = getattr(request, 'user_id', None)
@@ -203,7 +205,7 @@ def get_shares(request, link_id):
 def remove_update_share(request, share_id):
     try:
         if request.method == 'DELETE':
-            if not share_id:
+            if not share_id.strip():
                 return Response({'message': 'Invalid Input'}, status=400)
 
             session_user_id = getattr(request, 'user_id', None)
@@ -226,7 +228,7 @@ def remove_update_share(request, share_id):
         elif request.method == 'PUT':
             is_writable = request.data.get('isWritable')
 
-            if not share_id:
+            if not share_id.strip():
                 return Response({'message': 'Invalid Input'}, status=400)
 
             session_user_id = getattr(request, 'user_id', None)

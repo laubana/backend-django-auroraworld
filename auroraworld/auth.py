@@ -28,8 +28,9 @@ def refresh(request):
         result = jwt.decode(refresh_token, refresh_token_secret, algorithms=['HS256'])
 
         user_id = result.get('id')
+        email = result.get('email')
 
-        if not user_id:
+        if not user_id or not email:
             return Response({'message': 'Refresh failed.'}, status=401)
 
         try:

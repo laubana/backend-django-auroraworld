@@ -1,0 +1,30 @@
+[
+  {
+    "model": "auroraworld.category",
+    "pk": "cc27b00bc5214705931805e241ba2850",
+    "fields": {
+      "name": "Personal Favorites"
+    }
+  },
+  {
+    "model": "auroraworld.category",
+    "pk": "74d1aade7cba4d64ac7131a7de0e181d",
+    "fields": {
+      "name": "Work Resources"
+    }
+  },
+  {
+    "model": "auroraworld.category",
+    "pk": "805fc4d564944d2b8ef9ddc02ca872e5",
+    "fields": {
+      "name": "Reference Materials"
+    }
+  },
+  {
+    "model": "auroraworld.category",
+    "pk": "6d699f092ac448c4a22840653833b39f",
+    "fields": {
+      "name": "Educational and Learning Materials"
+    }
+  }
+]
