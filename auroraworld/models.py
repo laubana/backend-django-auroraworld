@@ -10,7 +10,7 @@ class User(models.Model):
         db_table = 'users'
 
     def __str__(self):
-        return self.email
+        return self.id
 
 
 class Category(models.Model):
@@ -21,7 +21,7 @@ class Category(models.Model):
         db_table = 'categories'
 
     def __str__(self):
-        return self.name
+        return self.id
 
 
 class Link(models.Model):
@@ -45,7 +45,7 @@ class Link(models.Model):
         db_table = 'links'
 
     def __str__(self):
-        return self.name
+        return self.id
 
 
 class Share(models.Model):
@@ -68,4 +68,4 @@ class Share(models.Model):
         unique_together = (('link', 'user'),)
 
     def __str__(self):
-        return f"Share {self.id}"
+        return self.id
