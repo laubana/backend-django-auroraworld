@@ -113,7 +113,7 @@ def add_shares(request):
                 for user_id in user_ids:
                     try:
                         existing_user = User.objects.get(id=user_id)
-                    except Link.DoesNotExist:
+                    except User.DoesNotExist:
                         continue
 
                     attempts = 0
@@ -121,29 +121,30 @@ def add_shares(request):
                     while attempts < max_attempts:
                         share_id = uuid.uuid4().hex
 
-                        try:
-                            Share.objects.create(
-                                id=share_id,
-                                link=existing_link,
-                                user=existing_user,
-                                user_email=existing_user.email,
-                                is_writable=1 if is_writable else 0,
-                            )
+                        with transaction.atomic():
+                            try:
+                                Share.objects.create(
+                                    id=share_id,
+                                    link=existing_link,
+                                    user=existing_user,
+                                    user_email=existing_user.email,
+                                    is_writable=1 if is_writable else 0,
+                                )
 
-                            share_ids.append(share_id)
+                                share_ids.append(share_id)
 
-                            break
-                        except IntegrityError as error:
-                            error_str = str(error).lower()
-
-                            if 'unique' in error_str and 'link_id' in error_str and 'user_id' in error_str:
                                 break
-                            elif 'unique' in error_str and 'id' in error_str:
-                                attempts += 1
+                            except IntegrityError as error:
+                                error_str = str(error).lower()
 
-                                continue
-                            else:
-                                raise error
+                                if 'unique' in error_str and 'link_id' in error_str and 'user_id' in error_str:
+                                    break
+                                elif 'unique' in error_str and 'id' in error_str:
+                                    attempts += 1
+
+                                    continue
+                                else:
+                                    raise error
 
         new_shares = Share.objects.filter(id__in=share_ids)
 
