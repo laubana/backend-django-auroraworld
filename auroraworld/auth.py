@@ -22,9 +22,6 @@ def refresh(request):
         access_token_secret = settings.ACCESS_TOKEN_SECRET
         refresh_token_secret = settings.REFRESH_TOKEN_SECRET
 
-        if not access_token_secret or not refresh_token_secret:
-            return Response({'message': 'Refresh failed.'}, status=401)
-
         result = jwt.decode(refresh_token, refresh_token_secret, algorithms=['HS256'])
 
         user_id = result.get('id')
@@ -80,9 +77,6 @@ def sign_in(request):
 
         access_token_secret = settings.ACCESS_TOKEN_SECRET
         refresh_token_secret = settings.REFRESH_TOKEN_SECRET
-
-        if not access_token_secret or not refresh_token_secret:
-            return Response({'message': 'Sign-in failed.'}, status=401)
 
         access_token = jwt.encode({
             'id': existing_user.id,

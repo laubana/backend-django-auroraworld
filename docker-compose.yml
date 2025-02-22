@@ -1,0 +1,11 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: backend-django-auroraworld
+    env_file: .env
+    command: python manage.py runserver 0.0.0.0:${PORT:-4000}
+    ports:
+      - ${PORT:-4000}:${PORT:-4000}
+    restart: always

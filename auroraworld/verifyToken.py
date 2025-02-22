@@ -15,9 +15,6 @@ def verify_token(func):
 
             access_token_secret = settings.ACCESS_TOKEN_SECRET
 
-            if not access_token_secret:
-                return Response({'message': 'Unauthorized'}, status=401)
-
             token = auth_header.split(" ")[1]
             result = jwt.decode(
                 token,

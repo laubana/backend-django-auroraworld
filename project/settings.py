@@ -21,9 +21,9 @@ env = environ.Env(DEBUG=(bool, False))
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-ORIGINS = env('ORIGINS')
-ACCESS_TOKEN_SECRET = env('ACCESS_TOKEN_SECRET')
-REFRESH_TOKEN_SECRET = env('REFRESH_TOKEN_SECRET')
+ORIGINS = env('ORIGINS', default='http://localhost:5173')
+ACCESS_TOKEN_SECRET = env('ACCESS_TOKEN_SECRET', default='9aq~&_8F<Qq=>EZzwhWFE=DJ$dI+<T')
+REFRESH_TOKEN_SECRET = env('REFRESH_TOKEN_SECRET', default='DaL0`oWAXQ.z|uLPf6rBwYS$^CRyV8')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
